@@ -6,16 +6,16 @@ import java.util.Scanner;
 public class PlayerWord implements Updatable {
 
     private static final int LETTERS_PER_WORD    = 5;
-    private static final String VALID_CHARACTERS = "^[a-zA-Z]*$";
+    private static final java.lang.String VALID_CHARACTERS = "^[a-zA-Z]*$";
 
     private static final Scanner SCAN = new Scanner(System.in);
 
-    private String[] playerWordLetters;
-    private String playerWord;
+    private java.lang.String[] playerWordLetters;
+    private java.lang.String playerWord;
 
     public PlayerWord() {
         this.playerWord        = "";
-        this.playerWordLetters = new String[LETTERS_PER_WORD];
+        this.playerWordLetters = new java.lang.String[LETTERS_PER_WORD];
     }
 
     /**
@@ -27,7 +27,7 @@ public class PlayerWord implements Updatable {
         if (validWord(guess)) {
             playerWord = guess;
         }
-        separateIntoLetters(playerWord);
+        separateIntoArrayOfLetters(playerWord);
     }
 
     /**
@@ -62,7 +62,7 @@ public class PlayerWord implements Updatable {
     /*
      * Breaks validated player guess into an array of letters.
      */
-    private void separateIntoLetters(final String word) {
+    private void separateIntoArrayOfLetters(final String word) {
         playerWordLetters = word.toUpperCase().split("");
     }
 

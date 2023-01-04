@@ -11,10 +11,14 @@ import javafx.fxml.FXML;
  * @author Mahannah
  * @version 3 January 2023
  */
-public class GameScreenController {
+public class WordleApplicationDriver {
 
     private static final int LETTERS_PER_ROW    = 5;
     private static final int ROWS_PER_GAMEBOARD = 6;
+
+    private final Updatable gameWord;
+    private final Updatable playerWord;
+    private final Comparable winCondition;
 
     @FXML private Label letter1_1;
     @FXML private Label letter1_2;
@@ -55,9 +59,6 @@ public class GameScreenController {
     @FXML private Button startGame;
     @FXML private Button quitGame;
 
-    private final Updatable gameWord;
-    private final Updatable playerWord;
-
     private Label[][] gameBoard;
 
     private int currentLetterIndex;
@@ -66,11 +67,12 @@ public class GameScreenController {
     /**
      * Controls the object of type GameBoardApplication.
      */
-    public GameScreenController() {
+    public WordleApplicationDriver() {
         this.currentLetterIndex = 0;
         this.currentRowIndex    = 0;
         this.gameWord           = new GameWord();
         this.playerWord         = new PlayerWord();
+        this.winCondition       = new winCondition(LETTERS_PER_ROW);
     }
 
     /**
@@ -122,11 +124,21 @@ public class GameScreenController {
     public void enterKeyPushed() {
         // Only go to the next row if not on the last row AND current row is filled with letters.
         if (currentLetterIndex == LETTERS_PER_ROW && currentRowIndex < ROWS_PER_GAMEBOARD) {
-            currentLetterIndex = 0;
+
+            PlayerWord playerWordObject = (PlayerWord) playerWord;
+            GameWord gameWordObject = (GameWord) gameWord;
+
+            String[] playerLetters = playerWordObject.getPlayerWordLetters();
+            String[] gameLetters = gameWordObject.getGameWordLetters();
+
+            for (int i = 0; i <LETTERS_PER_ROW; i++) {
+                if (winCondition.lettersAreEqual(playerLetters[i], gameLetters[i])) {
+                    Animations.playFlipAnimation(letter1_1, true);
+                }
+            }
             currentRowIndex++;
+            currentLetterIndex = 0;
         }
-        Animations.playFlipAnimation(letter1_1);
-        Animations.playWiggleAnimation(letter1_2);
     }
 
     /*

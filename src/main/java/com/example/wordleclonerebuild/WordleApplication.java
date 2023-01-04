@@ -7,7 +7,9 @@ import java.io.IOException;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-public class GameBoardApplication extends Application {
+public class WordleApplication extends Application {
+
+    private static final int ANIMATION_DELAY_TIME_IN_MS = 500;
 
     private static final String WINDOW_TITLE = "Wordle Clone";
     private static final int    WINDOW_WIDTH_IN_PIXELS = 500;
@@ -23,26 +25,26 @@ public class GameBoardApplication extends Application {
     @Override
     public void start(final Stage stage) throws IOException {
 
-        FXMLLoader fxmlLoader = new FXMLLoader(GameBoardApplication.class.getResource("gameboard.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(WordleApplication.class.getResource("gameboard.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), WINDOW_WIDTH_IN_PIXELS, WINDOW_HEIGHT_IN_PIXELS);
 
-        GameScreenController gameScreenController = fxmlLoader.getController();
+        WordleApplicationDriver wordleApplicationDriver = fxmlLoader.getController();
 
         // Sets up key presses from the keyboard.
         scene.setOnKeyPressed(keyEvent -> {
             if (keyEvent.getCode().isLetterKey()) {
-                gameScreenController.letterKeyPushed(keyEvent.getText().toUpperCase());
+                wordleApplicationDriver.letterKeyPushed(keyEvent.getText().toUpperCase());
             }
-            if (keyEvent.getCode() == KeyCode.ENTER && System.currentTimeMillis() - animationDelay > 500) {
-                gameScreenController.enterKeyPushed();
+            if (keyEvent.getCode() == KeyCode.ENTER && System.currentTimeMillis() - animationDelay > ANIMATION_DELAY_TIME_IN_MS) {
+                wordleApplicationDriver.enterKeyPushed();
                 animationDelay = System.currentTimeMillis();
             }
             if (keyEvent.getCode() == KeyCode.BACK_SPACE) {
-                gameScreenController.backspaceKeyPushed();
+                wordleApplicationDriver.backspaceKeyPushed();
             }
         });
 
-        gameScreenController.initializeGameScreenControls();
+        wordleApplicationDriver.initializeGameScreenControls();
 
         stage.setTitle(WINDOW_TITLE);
         stage.setScene(scene);
@@ -54,7 +56,7 @@ public class GameBoardApplication extends Application {
      *
      * @param args to be read.
      */
-    public static void main(final String[] args) {
+    public static void main(final Updatable[] args) {
         launch();
     }
 }
