@@ -17,46 +17,46 @@
 
     <GridPane>
         <!-- First letter row -->
-        <Label GridPane.rowIndex="1" GridPane.columnIndex="0" fx:id="box11"> </Label>
-        <Label GridPane.rowIndex="1" GridPane.columnIndex="1" fx:id="box12"> </Label>
-        <Label GridPane.rowIndex="1" GridPane.columnIndex="2" fx:id="box13"> </Label>
-        <Label GridPane.rowIndex="1" GridPane.columnIndex="3" fx:id="box14"> </Label>
-        <Label GridPane.rowIndex="1" GridPane.columnIndex="4" fx:id="box15"> </Label>
+        <Label GridPane.rowIndex="1" GridPane.columnIndex="0" fx:id="letter1_1"> </Label>
+        <Label GridPane.rowIndex="1" GridPane.columnIndex="1" fx:id="letter1_2"> </Label>
+        <Label GridPane.rowIndex="1" GridPane.columnIndex="2" fx:id="letter1_3"> </Label>
+        <Label GridPane.rowIndex="1" GridPane.columnIndex="3" fx:id="letter1_4"> </Label>
+        <Label GridPane.rowIndex="1" GridPane.columnIndex="4" fx:id="letter1_5"> </Label>
 
         <!-- Second letter row -->
-        <Label GridPane.rowIndex="2" GridPane.columnIndex="0" fx:id="box21"> </Label>
-        <Label GridPane.rowIndex="2" GridPane.columnIndex="1" fx:id="box22"> </Label>
-        <Label GridPane.rowIndex="2" GridPane.columnIndex="2" fx:id="box23"> </Label>
-        <Label GridPane.rowIndex="2" GridPane.columnIndex="3" fx:id="box24"> </Label>
-        <Label GridPane.rowIndex="2" GridPane.columnIndex="4" fx:id="box25"> </Label>
+        <Label GridPane.rowIndex="2" GridPane.columnIndex="0" fx:id="letter2_1"> </Label>
+        <Label GridPane.rowIndex="2" GridPane.columnIndex="1" fx:id="letter2_2"> </Label>
+        <Label GridPane.rowIndex="2" GridPane.columnIndex="2" fx:id="letter2_3"> </Label>
+        <Label GridPane.rowIndex="2" GridPane.columnIndex="3" fx:id="letter2_4"> </Label>
+        <Label GridPane.rowIndex="2" GridPane.columnIndex="4" fx:id="letter2_5"> </Label>
 
         <!-- Third letter row -->
-        <Label GridPane.rowIndex="3" GridPane.columnIndex="0"  fx:id="box31"> </Label>
-        <Label GridPane.rowIndex="3" GridPane.columnIndex="1"  fx:id="box32"> </Label>
-        <Label GridPane.rowIndex="3" GridPane.columnIndex="2"  fx:id="box33"> </Label>
-        <Label GridPane.rowIndex="3" GridPane.columnIndex="3"  fx:id="box34"> </Label>
-        <Label GridPane.rowIndex="3" GridPane.columnIndex="4"  fx:id="box35"> </Label>
+        <Label GridPane.rowIndex="3" GridPane.columnIndex="0"  fx:id="letter3_1"> </Label>
+        <Label GridPane.rowIndex="3" GridPane.columnIndex="1"  fx:id="letter3_2"> </Label>
+        <Label GridPane.rowIndex="3" GridPane.columnIndex="2"  fx:id="letter3_3"> </Label>
+        <Label GridPane.rowIndex="3" GridPane.columnIndex="3"  fx:id="letter3_4"> </Label>
+        <Label GridPane.rowIndex="3" GridPane.columnIndex="4"  fx:id="letter3_5"> </Label>
 
         <!-- Fourth letter row -->
-        <Label GridPane.rowIndex="4" GridPane.columnIndex="0"  fx:id="box41"> </Label>
-        <Label GridPane.rowIndex="4" GridPane.columnIndex="1"  fx:id="box42"> </Label>
-        <Label GridPane.rowIndex="4" GridPane.columnIndex="2"  fx:id="box43"> </Label>
-        <Label GridPane.rowIndex="4" GridPane.columnIndex="3"  fx:id="box44"> </Label>
-        <Label GridPane.rowIndex="4" GridPane.columnIndex="4"  fx:id="box45"> </Label>
+        <Label GridPane.rowIndex="4" GridPane.columnIndex="0"  fx:id="letter4_1"> </Label>
+        <Label GridPane.rowIndex="4" GridPane.columnIndex="1"  fx:id="letter4_2"> </Label>
+        <Label GridPane.rowIndex="4" GridPane.columnIndex="2"  fx:id="letter4_3"> </Label>
+        <Label GridPane.rowIndex="4" GridPane.columnIndex="3"  fx:id="letter4_4"> </Label>
+        <Label GridPane.rowIndex="4" GridPane.columnIndex="4"  fx:id="letter4_5"> </Label>
 
         <!-- Fifth letter row -->
-        <Label GridPane.rowIndex="5" GridPane.columnIndex="0"  fx:id="box51"> </Label>
-        <Label GridPane.rowIndex="5" GridPane.columnIndex="1"  fx:id="box52"> </Label>
-        <Label GridPane.rowIndex="5" GridPane.columnIndex="2"  fx:id="box53"> </Label>
-        <Label GridPane.rowIndex="5" GridPane.columnIndex="3"  fx:id="box54"> </Label>
-        <Label GridPane.rowIndex="5" GridPane.columnIndex="4"  fx:id="box55"> </Label>
+        <Label GridPane.rowIndex="5" GridPane.columnIndex="0"  fx:id="letter5_1"> </Label>
+        <Label GridPane.rowIndex="5" GridPane.columnIndex="1"  fx:id="letter5_2"> </Label>
+        <Label GridPane.rowIndex="5" GridPane.columnIndex="2"  fx:id="letter5_3"> </Label>
+        <Label GridPane.rowIndex="5" GridPane.columnIndex="3"  fx:id="letter5_4"> </Label>
+        <Label GridPane.rowIndex="5" GridPane.columnIndex="4"  fx:id="letter5_5"> </Label>
 
         <!-- Sixth letter row -->
-        <Label GridPane.rowIndex="6" GridPane.columnIndex="0"  fx:id="box61"> </Label>
-        <Label GridPane.rowIndex="6" GridPane.columnIndex="1"  fx:id="box62"> </Label>
-        <Label GridPane.rowIndex="6" GridPane.columnIndex="2"  fx:id="box63"> </Label>
-        <Label GridPane.rowIndex="6" GridPane.columnIndex="3"  fx:id="box64"> </Label>
-        <Label GridPane.rowIndex="6" GridPane.columnIndex="4"  fx:id="box65"> </Label>
+        <Label GridPane.rowIndex="6" GridPane.columnIndex="0"  fx:id="letter6_1"> </Label>
+        <Label GridPane.rowIndex="6" GridPane.columnIndex="1"  fx:id="letter6_2"> </Label>
+        <Label GridPane.rowIndex="6" GridPane.columnIndex="2"  fx:id="letter6_3"> </Label>
+        <Label GridPane.rowIndex="6" GridPane.columnIndex="3"  fx:id="letter6_4"> </Label>
+        <Label GridPane.rowIndex="6" GridPane.columnIndex="4"  fx:id="letter6_5"> </Label>
     </GridPane>
 
     <HBox id="footer" alignment="CENTER">

@@ -125,6 +125,8 @@ public class GameScreenController {
             currentLetterIndex = 0;
             currentRowIndex++;
         }
+        Animations.playFlipAnimation(letter1_1);
+        Animations.playWiggleAnimation(letter1_2);
     }
 
     /*
