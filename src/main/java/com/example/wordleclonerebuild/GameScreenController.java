@@ -55,7 +55,8 @@ public class GameScreenController {
     @FXML private Button startGame;
     @FXML private Button quitGame;
 
-    private final GameWord gameWord;
+    private final Updatable gameWord;
+    private final Updatable playerWord;
 
     private Label[][] gameBoard;
 
@@ -67,8 +68,9 @@ public class GameScreenController {
      */
     public GameScreenController() {
         this.currentLetterIndex = 0;
-        this.currentRowIndex = 0;
-        this.gameWord = new GameWord();
+        this.currentRowIndex    = 0;
+        this.gameWord           = new GameWord();
+        this.playerWord         = new PlayerWord();
     }
 
     /**
@@ -80,7 +82,7 @@ public class GameScreenController {
     }
 
     /**
-     * Resets the gameboard. Erases all letters and resents the letter and row indices.
+     * Resets the gameboard. Erases all letters and resets the letter and row indices.
      */
     public void onPlayAgainButtonClick() {
         clearGameBoard();
