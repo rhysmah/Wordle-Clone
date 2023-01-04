@@ -50,15 +50,15 @@ public class winCondition implements Comparable {
      * @return true if the letter is in the word, else false.
      */
     @Override
-    public boolean letterIsInWord(final String letter, final Updatable[] word) {
+    public boolean letterIsInWord(final String letter, final String[] word) {
         /*
          * The compiler doesn't know if an object of type Updatable contains Strings. So here,
          * we're looping through each of the objects in "word", whatever they may be, converting
          * each of those objects to a String, then comparing that String to "letter", itself a
          * String, to see if they match. We're explicitly asking to look for a String comparison.
          */
-        for (Updatable letterInWord : word) {
-            if (letterInWord.toString().equals(letter)) {
+        for (String letterInWord : word) {
+            if (letterInWord.equals(letter)) {
                 return true;
             }
         }

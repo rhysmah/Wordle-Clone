@@ -133,8 +133,12 @@ public class WordleApplicationDriver {
             String[] gameLetters = gameWordObject.getGameWordLetters();
 
             for (int i = 0; i <LETTERS_PER_ROW; i++) {
+
                 if (winCondition.lettersAreEqual(playerLetters[i], gameLetters[i])) {
                     Animations.playFlipAnimation(letter1_1, true);
+
+                } else if (winCondition.letterIsInWord(playerLetters[i], gameLetters)) {
+                    Animations.playFlipAnimation(letter1_1, false);
                 }
             }
             currentRowIndex++;
