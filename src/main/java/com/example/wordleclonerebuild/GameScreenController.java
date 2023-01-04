@@ -55,7 +55,10 @@ public class GameScreenController {
     @FXML private Button startGame;
     @FXML private Button quitGame;
 
+    private final GameWord gameWord;
+
     private Label[][] gameBoard;
+
     private int currentLetterIndex;
     private int currentRowIndex;
 
@@ -65,6 +68,7 @@ public class GameScreenController {
     public GameScreenController() {
         this.currentLetterIndex = 0;
         this.currentRowIndex = 0;
+        this.gameWord = new GameWord();
     }
 
     /**
