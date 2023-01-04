@@ -1,33 +1,16 @@
 package com.example.wordleclonerebuild;
 
 import java.util.Arrays;
-import java.util.Scanner;
 
 public class PlayerWord implements Updatable {
 
     private static final int LETTERS_PER_WORD    = 5;
-    private static final java.lang.String VALID_CHARACTERS = "^[a-zA-Z]*$";
+    private static final String VALID_CHARACTERS = "^[a-zA-Z]*$";
 
-    private static final Scanner SCAN = new Scanner(System.in);
-
-    private java.lang.String[] playerWordLetters;
-    private java.lang.String playerWord;
+    private String[] playerWordLetters;
 
     public PlayerWord() {
-        this.playerWord        = "";
-        this.playerWordLetters = new java.lang.String[LETTERS_PER_WORD];
-    }
-
-    /**
-     * Asks the player for a word. If the word is a valid length, contains valid characters,
-     * and is in the word list, then it's assigned to playerWord.
-     */
-    public void askForWord() {
-        String guess = SCAN.next().toUpperCase();
-        if (validWord(guess)) {
-            playerWord = guess;
-        }
-        separateIntoArrayOfLetters(playerWord);
+        this.playerWordLetters = new String[LETTERS_PER_WORD];
     }
 
     /**
@@ -39,15 +22,6 @@ public class PlayerWord implements Updatable {
     @Override
     public void replaceLetterAtIndexPosition(final String character, final int indexPosition) {
         playerWordLetters[indexPosition] = character.toUpperCase();
-    }
-
-    /**
-     * Returns the player word
-     *
-     * @return the player word (String).
-     */
-    public String getPlayerWord() {
-        return playerWord;
     }
 
     /**

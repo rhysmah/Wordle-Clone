@@ -56,7 +56,7 @@ public class WordleApplication extends Application {
      *
      * @param args to be read.
      */
-    public static void main(final Updatable[] args) {
+    public static void main(final String[] args) {
         launch();
     }
 }
