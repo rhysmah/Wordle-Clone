@@ -84,6 +84,7 @@ public class WordleController {
 
         GameWord gameWordObject = (GameWord) gameWord;
         gameWordObject.setGameWord();
+        System.out.println(gameWordObject.getGameWord());
     }
 
     /**
@@ -94,6 +95,7 @@ public class WordleController {
 
         GameWord gameWordObject = (GameWord) gameWord;
         gameWordObject.setGameWord();
+        System.out.println(gameWordObject.getGameWord());
 
         currentLetterIndex = 0;
         currentRowIndex = 0;
@@ -109,7 +111,7 @@ public class WordleController {
     /**
      *
      */
-    public void enterKeyPushed() {
+    protected void enterKeyPushed() {
 
         PlayerWord playerWordObject = (PlayerWord) playerWord;
         GameWord gameWordObject     = (GameWord) gameWord;
@@ -165,7 +167,7 @@ public class WordleController {
      *
      * @param letter the letter to be added to the gameboard.
      */
-    public void letterKeyPushed(final String letter) {
+    protected void letterKeyPushed(final String letter) {
         if (currentLetterIndex < LETTERS_PER_ROW) {
             gameBoard[currentRowIndex][currentLetterIndex].setText(letter);
             playerWord.updateLetterAtIndexPosition(letter, currentLetterIndex);
@@ -176,7 +178,7 @@ public class WordleController {
     /**
      * Deletes the last inputted letter.
      */
-    public void backspaceKeyPushed() {
+    protected void backspaceKeyPushed() {
         if (currentLetterIndex > 0) {
             currentLetterIndex--;
             gameBoard[currentRowIndex][currentLetterIndex].setText("");
