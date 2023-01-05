@@ -13,10 +13,8 @@ public class winCondition implements Comparable {
 
     /**
      * Creates an object of type winCondition.
-     *
-     * @param lettersPerWord the length of the array to be created.
      */
-    public winCondition(final int lettersPerWord) {
+    public winCondition() {
         this.solution = new Boolean[] {false, false, false, false, false};
     }
 
@@ -26,7 +24,7 @@ public class winCondition implements Comparable {
      * @param index the index position that's updated.
      * @param value the value to be added to the specified index position.
      */
-    public void updateSolution(final int index, final boolean value) {
+    public void updateWinCondition(final int index, final boolean value) {
         solution[index] = value;
     }
 

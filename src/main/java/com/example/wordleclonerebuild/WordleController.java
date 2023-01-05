@@ -72,7 +72,7 @@ public class WordleController {
         this.currentRowIndex    = 0;
         this.gameWord           = new GameWord();
         this.playerWord         = new PlayerWord();
-        this.winCondition       = new winCondition(LETTERS_PER_ROW);
+        this.winCondition       = new winCondition();
     }
 
     /**
@@ -152,7 +152,7 @@ public class WordleController {
     private void checkAndAnimateLetters(GameWord gameWordObject, String[] playerLetters, String[] gameLetters, int i) {
         if (winCondition.lettersAreEqual(playerLetters[i], gameLetters[i])) {
             Animations.playFlipAnimation(gameBoard[currentRowIndex][i], Animations.Colors.GREEN);
-            winCondition.updateSolution(i, true);
+            winCondition.updateWinCondition(i, true);
 
         } else if (winCondition.letterIsInWord(playerLetters[i], gameWordObject.getGameWord())) {
             Animations.playFlipAnimation(gameBoard[currentRowIndex][i], Animations.Colors.YELLOW);
