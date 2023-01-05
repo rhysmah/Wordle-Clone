@@ -60,7 +60,6 @@ public final class Animations {
         Animation animationTwo = createFlipAnimation(letterBox, 0, 1);
 
         animationOne.play();
-
         animationOne.setOnFinished(actionEvent -> {
             updateContainerColor(letterBox, color);
             animationTwo.play();
