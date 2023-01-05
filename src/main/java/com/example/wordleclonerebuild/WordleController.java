@@ -168,7 +168,7 @@ public class WordleController {
     public void letterKeyPushed(final String letter) {
         if (currentLetterIndex < LETTERS_PER_ROW) {
             gameBoard[currentRowIndex][currentLetterIndex].setText(letter);
-            playerWord.replaceLetterAtIndexPosition(letter, currentLetterIndex);
+            playerWord.updateLetterAtIndexPosition(letter, currentLetterIndex);
             currentLetterIndex++;
         }
     }

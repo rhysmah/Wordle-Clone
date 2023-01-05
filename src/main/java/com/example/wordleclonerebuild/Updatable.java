@@ -1,5 +1,5 @@
 package com.example.wordleclonerebuild;
 
 public interface Updatable {
-    void replaceLetterAtIndexPosition(String character, int indexPosition);
+    void updateLetterAtIndexPosition(String character, int indexPosition);
 }

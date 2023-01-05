@@ -6,7 +6,7 @@ import java.util.Random;
  * Creates a game word for Wordle.
  *
  * @author Mahannah
- * @version 3 January 2023
+ * @version 5 January 2023
  */
 public class GameWord implements Updatable {
 
@@ -21,13 +21,16 @@ public class GameWord implements Updatable {
         gameWord = "";
     }
 
+    /**
+     * Selects a random word as the game word and separates the game word into an array of letters
+     */
     public void setGameWord() {
         gameWord = selectRandomWord();
         gameWordLetters = separateIntoLetters();
     }
 
     /**
-     * Returns the gameWord.
+     * Returns the game word.
      *
      * @return the gameWord (String).
      */
@@ -35,6 +38,11 @@ public class GameWord implements Updatable {
         return gameWord;
     }
 
+    /**
+     * Returns the game word letters.
+     *
+     * @return the gameWordLetters (a String array).
+     */
     public String[] getGameWordLetters() {
         return gameWordLetters;
     }
@@ -46,7 +54,7 @@ public class GameWord implements Updatable {
      * @param character the character (String) to be added to the specified index position.
      */
     @Override
-    public void replaceLetterAtIndexPosition(final String character, final int indexPosition) {
+    public void updateLetterAtIndexPosition(final String character, final int indexPosition) {
         gameWordLetters[indexPosition] = character.toUpperCase();
     }
 

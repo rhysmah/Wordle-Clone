@@ -20,7 +20,7 @@ public class PlayerWord implements Updatable {
      * @param character the character (String) to be added to the specified index position.
      */
     @Override
-    public void replaceLetterAtIndexPosition(final String character, final int indexPosition) {
+    public void updateLetterAtIndexPosition(final String character, final int indexPosition) {
         playerWordLetters[indexPosition] = character.toUpperCase();
     }
 
