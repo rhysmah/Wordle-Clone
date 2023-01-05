@@ -9,7 +9,7 @@ import javafx.fxml.FXML;
  * Controls the main game screen.
  *
  * @author Mahannah
- * @version 3 January 2023
+ * @version 5 January 2023
  */
 public class WordleController {
 
@@ -81,6 +81,9 @@ public class WordleController {
     public final void initializeGameScreenControls() {
         initializeGameBoardButtons();
         initializeGameBoard();
+
+        GameWord gameWordObject = (GameWord) gameWord;
+        gameWordObject.setGameWord();
     }
 
     /**
@@ -88,6 +91,10 @@ public class WordleController {
      */
     public void onPlayAgainButtonClick() {
         clearGameBoard();
+
+        GameWord gameWordObject = (GameWord) gameWord;
+        gameWordObject.setGameWord();
+
         currentLetterIndex = 0;
         currentRowIndex = 0;
     }
@@ -107,8 +114,12 @@ public class WordleController {
         PlayerWord playerWordObject = (PlayerWord) playerWord;
         GameWord gameWordObject     = (GameWord) gameWord;
 
-        if (currentLetterIndex == LETTERS_PER_ROW && currentRowIndex < ROWS_PER_GAMEBOARD) {
+        if (!playerWordObject.validWord()) {
+            for (int index = 0; index <LETTERS_PER_ROW; index++) {
+                Animations.playWiggleAnimation(gameBoard[currentRowIndex][index]);
+            }
 
+        } else if (playerWordObject.validWord()) {
             String[] playerLetters = playerWordObject.getPlayerWordLetters();
             String[] gameLetters   = gameWordObject.getGameWordLetters();
 
@@ -117,15 +128,25 @@ public class WordleController {
             }
             currentRowIndex++;
             currentLetterIndex = 0;
-
-            if (winCondition.satisfied()) {
-                PopUpWindow.display("Congratulations! You win!", "The word was indeed " + gameWordObject.getGameWord());
-            }
-        } else {
-            PopUpWindow.display("You lost!", "The word was " + gameWordObject.getGameWord());
+        }
+        if (!rowsRemaining()) {
+            PopUpWindow.display("You lose!", "The word was " + gameWordObject.getGameWord());
+        }
+        if (winCondition.satisfied()) {
+            PopUpWindow.display("You win!", "The word was indeed " + gameWordObject.getGameWord());
         }
     }
 
+    /*
+     * Checks if there are still player turns remaining -- i.e., there are rows left.
+     */
+    private boolean rowsRemaining() {
+        return currentRowIndex < ROWS_PER_GAMEBOARD;
+    }
+
+    /*
+     * Compares letters in player word to letters in game word and animates the letters appropriately.
+     */
     private void checkAndAnimateLetters(GameWord gameWordObject, String[] playerLetters, String[] gameLetters, int i) {
         if (winCondition.lettersAreEqual(playerLetters[i], gameLetters[i])) {
             Animations.playFlipAnimation(gameBoard[currentRowIndex][i], Animations.Colors.GREEN);

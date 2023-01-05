@@ -36,7 +36,8 @@ public class PlayerWord implements Updatable {
     /*
      * Checks if the player word is valid.
      */
-    private boolean validWord(final String word) {
+    public boolean validWord() {
+        String word = String.join("", playerWordLetters);
         return containsValidCharacters(word) && isValidLength(word) && isInWordList(word);
     }
 

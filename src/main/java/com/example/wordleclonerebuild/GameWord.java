@@ -11,13 +11,17 @@ import java.util.Random;
 public class GameWord implements Updatable {
 
     private static final Random RANDOM = new Random();
-    private final String gameWord;
-    private final String[] gameWordLetters;
+    private String gameWord;
+    private String[] gameWordLetters;
 
     /**
      * Creates an object of type GameWord.
      */
     public GameWord() {
+        gameWord = "";
+    }
+
+    public void setGameWord() {
         gameWord = selectRandomWord();
         gameWordLetters = separateIntoLetters();
     }
