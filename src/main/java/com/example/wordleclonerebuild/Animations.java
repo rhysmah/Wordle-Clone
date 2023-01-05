@@ -21,8 +21,9 @@ public final class Animations {
      * The background of the player guess letters will change based on certain conditions.
      */
     enum Colors {
-        GREEN("#32CD32"),
-        YELLOW("#FFD700");
+        GREEN("#8FBC8F"),
+        YELLOW("#FFD700"),
+        GREY("#DCDCDC");
 
         private final String colorValue;
 
@@ -56,16 +57,22 @@ public final class Animations {
      *
      * @param letterBox the object to be animated.
      */
-    public static void playFlipAnimation(final Label letterBox, final boolean letterPosition) {
+    public static void playFlipAnimation(final Label letterBox, final Colors color) {
         Animation animationOne = createFlipAnimation(letterBox, 1, 0);
         Animation animationTwo = createFlipAnimation(letterBox, 0, 1);
 
         animationOne.play();
+
         animationOne.setOnFinished(actionEvent -> {
-            if (letterPosition) {
+
+            if (color == Colors.GREEN) {
                 updateContainerColor(letterBox, Colors.GREEN.getColorValue());
-            } else {
+
+            } else if (color == Colors.YELLOW) {
                 updateContainerColor(letterBox, Colors.YELLOW.getColorValue());
+
+            } else {
+                updateContainerColor(letterBox, Colors.GREY.getColorValue());
             }
             animationTwo.play();
         });

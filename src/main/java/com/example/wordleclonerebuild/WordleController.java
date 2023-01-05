@@ -11,14 +11,14 @@ import javafx.fxml.FXML;
  * @author Mahannah
  * @version 3 January 2023
  */
-public class WordleApplicationDriver {
+public class WordleController {
 
     private static final int LETTERS_PER_ROW    = 5;
     private static final int ROWS_PER_GAMEBOARD = 6;
 
     private final Updatable gameWord;
     private final Updatable playerWord;
-    private final Comparable winCondition;
+    private final winCondition winCondition;
 
     @FXML private Label letter1_1;
     @FXML private Label letter1_2;
@@ -67,7 +67,7 @@ public class WordleApplicationDriver {
     /**
      * Controls the object of type GameBoardApplication.
      */
-    public WordleApplicationDriver() {
+    public WordleController() {
         this.currentLetterIndex = 0;
         this.currentRowIndex    = 0;
         this.gameWord           = new GameWord();
@@ -79,8 +79,8 @@ public class WordleApplicationDriver {
      * Initializes the gameboard and buttons.
      */
     public final void initializeGameScreenControls() {
-        initializeGameBoard();
         initializeGameBoardButtons();
+        initializeGameBoard();
     }
 
     /**
@@ -97,6 +97,44 @@ public class WordleApplicationDriver {
      */
     public void onQuitGameButtonClick() {
         Platform.exit();
+    }
+
+    /**
+     *
+     */
+    public void enterKeyPushed() {
+
+        if (currentLetterIndex == LETTERS_PER_ROW && currentRowIndex < ROWS_PER_GAMEBOARD) {
+
+            PlayerWord playerWordObject = (PlayerWord) playerWord;
+            GameWord gameWordObject = (GameWord) gameWord;
+
+            String[] playerLetters = playerWordObject.getPlayerWordLetters();
+            String[] gameLetters = gameWordObject.getGameWordLetters();
+
+            for (int i = 0; i <LETTERS_PER_ROW; i++) {
+
+                if (winCondition.lettersAreEqual(playerLetters[i], gameLetters[i])) {
+                    Animations.playFlipAnimation(gameBoard[currentRowIndex][i], Animations.Colors.GREEN);
+                    winCondition.updateSolution(i, true);
+
+                } else if (winCondition.letterIsInWord(playerLetters[i], gameLetters)) {
+                    Animations.playFlipAnimation(gameBoard[currentRowIndex][i], Animations.Colors.YELLOW);
+
+                } else {
+                    Animations.playFlipAnimation(gameBoard[currentRowIndex][i], Animations.Colors.GREY);
+                }
+            }
+            currentRowIndex++;
+            currentLetterIndex = 0;
+
+            if (winCondition.ifMet()) {
+                PopUpWindow.display("Congratulations! You win!", ((GameWord) gameWord).getGameWord());
+            }
+
+        } else {
+            PopUpWindow.display("Oh no! You lose.", ((GameWord) gameWord).getGameWord());
+        }
     }
 
     /**
@@ -122,30 +160,6 @@ public class WordleApplicationDriver {
         }
     }
 
-    public void enterKeyPushed() {
-        // Only go to the next row if not on the last row AND current row is filled with letters.
-        if (currentLetterIndex == LETTERS_PER_ROW && currentRowIndex < ROWS_PER_GAMEBOARD) {
-
-            PlayerWord playerWordObject = (PlayerWord) playerWord;
-            GameWord gameWordObject = (GameWord) gameWord;
-
-            String[] playerLetters = playerWordObject.getPlayerWordLetters();
-            String[] gameLetters = gameWordObject.getGameWordLetters();
-
-            for (int i = 0; i <LETTERS_PER_ROW; i++) {
-
-                if (winCondition.lettersAreEqual(playerLetters[i], gameLetters[i])) {
-                    Animations.playFlipAnimation(letter1_1, true);
-
-                } else if (winCondition.letterIsInWord(playerLetters[i], gameLetters)) {
-                    Animations.playFlipAnimation(letter1_1, false);
-                }
-            }
-            currentRowIndex++;
-            currentLetterIndex = 0;
-        }
-    }
-
     /*
      * Erases all current letters on the gameboard.
      */
@@ -153,6 +167,7 @@ public class WordleApplicationDriver {
         for (Label[] row : gameBoard) {
             for (Label letter : row) {
                 letter.setText("");
+                letter.setStyle("-fx-background-color: #DCDCDC");
             }
         }
     }

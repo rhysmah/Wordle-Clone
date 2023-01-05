@@ -70,7 +70,7 @@ public class winCondition implements Comparable {
      *
      * @return true if the array contains all "true" values, else false.
      */
-    public Boolean checkIfWinConditionMet() {
+    public Boolean ifMet() {
         return Arrays.stream(solution).anyMatch(booleanValue -> !booleanValue);
     }
 }

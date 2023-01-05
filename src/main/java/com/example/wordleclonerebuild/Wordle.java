@@ -7,7 +7,7 @@ import java.io.IOException;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-public class WordleApplication extends Application {
+public class Wordle extends Application {
 
     private static final int ANIMATION_DELAY_TIME_IN_MS = 500;
 
@@ -25,26 +25,26 @@ public class WordleApplication extends Application {
     @Override
     public void start(final Stage stage) throws IOException {
 
-        FXMLLoader fxmlLoader = new FXMLLoader(WordleApplication.class.getResource("gameboard.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(Wordle.class.getResource("gameboard.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), WINDOW_WIDTH_IN_PIXELS, WINDOW_HEIGHT_IN_PIXELS);
 
-        WordleApplicationDriver wordleApplicationDriver = fxmlLoader.getController();
+        WordleController wordleController = fxmlLoader.getController();
 
         // Sets up key presses from the keyboard.
         scene.setOnKeyPressed(keyEvent -> {
             if (keyEvent.getCode().isLetterKey()) {
-                wordleApplicationDriver.letterKeyPushed(keyEvent.getText().toUpperCase());
+                wordleController.letterKeyPushed(keyEvent.getText().toUpperCase());
             }
             if (keyEvent.getCode() == KeyCode.ENTER && System.currentTimeMillis() - animationDelay > ANIMATION_DELAY_TIME_IN_MS) {
-                wordleApplicationDriver.enterKeyPushed();
+                wordleController.enterKeyPushed();
                 animationDelay = System.currentTimeMillis();
             }
             if (keyEvent.getCode() == KeyCode.BACK_SPACE) {
-                wordleApplicationDriver.backspaceKeyPushed();
+                wordleController.backspaceKeyPushed();
             }
         });
 
-        wordleApplicationDriver.initializeGameScreenControls();
+        wordleController.initializeGameScreenControls();
 
         stage.setTitle(WINDOW_TITLE);
         stage.setScene(scene);

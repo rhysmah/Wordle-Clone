@@ -7,7 +7,7 @@
 <?import javafx.scene.text.Text?>
 <VBox xmlns         ="http://javafx.com/javafx"
       xmlns:fx      ="http://javafx.com/fxml"
-      fx:controller ="com.example.wordleclonerebuild.WordleApplicationDriver"
+      fx:controller ="com.example.wordleclonerebuild.WordleController"
       prefHeight    ="400.0"
       prefWidth     ="600.0">
 
