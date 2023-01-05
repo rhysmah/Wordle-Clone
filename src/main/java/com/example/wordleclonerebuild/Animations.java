@@ -7,18 +7,23 @@ import javafx.scene.control.Label;
 import javafx.util.Duration;
 
 /**
- * A class static methods for animating the Wordle board.
+ * A class of static methods for animating the Wordle board.
  *
  * @author Mahannah
- * @version 4 January 2023
+ * @version 5 January 2023
  */
 public final class Animations {
 
-    private static final int WIGGLE_ANIMATION_DURATION_IN_MS = 100;
-    private static final int FLIP_ANIMATION_DURATION_IN_MS   = 250;
+    private static final int WIGGLE_DURATION_IN_MS = 100;
+    private static final int FLIP_DURATION_IN_MS   = 250;
 
     /*
-     * The background of the player guess letters will change based on certain conditions.
+     * Contains only public static methods.
+     */
+    private Animations() {}
+
+    /*
+     * Letterbox colors, based on certain conditions.
      */
     enum Colors {
         GREEN("#8FBC8F"),
@@ -36,20 +41,13 @@ public final class Animations {
         }
     }
 
-    /*
-     * Contains only public static methods.
-     */
-    private Animations() {
-    }
-
     /**
      * Plays a wiggle animation on the specified object.
      *
      * @param letterBox the object to be animated.
      */
     public static void playWiggleAnimation(final Label letterBox) {
-        Animation wiggleAnimation = createWiggleAnimation(letterBox);
-        wiggleAnimation.play();
+        createWiggleAnimation(letterBox).play();
     }
 
     /**
@@ -64,29 +62,23 @@ public final class Animations {
         animationOne.play();
 
         animationOne.setOnFinished(actionEvent -> {
-
-            if (color == Colors.GREEN) {
-                updateContainerColor(letterBox, Colors.GREEN.getColorValue());
-
-            } else if (color == Colors.YELLOW) {
-                updateContainerColor(letterBox, Colors.YELLOW.getColorValue());
-
-            } else {
-                updateContainerColor(letterBox, Colors.GREY.getColorValue());
-            }
+            updateContainerColor(letterBox, color);
             animationTwo.play();
         });
     }
 
-    private static void updateContainerColor(final Label letterBox, final String color) {
-        letterBox.setStyle("-fx-background-color:" + color);
+    /*
+     * Updates the letterbox container.
+     */
+    private static void updateContainerColor(final Label letterBox, final Colors color) {
+        letterBox.setStyle("-fx-background-color:" + color.getColorValue());
     }
 
     /*
      * A flip animation that gives the illusion the object's rotating on its y-axis.
      */
     private static Animation createFlipAnimation(final Label letterBox, final int startPosition, final int endPosition) {
-        ScaleTransition flip = new ScaleTransition(Duration.millis(FLIP_ANIMATION_DURATION_IN_MS), letterBox);
+        ScaleTransition flip = new ScaleTransition(Duration.millis(FLIP_DURATION_IN_MS), letterBox);
         flip.setFromY(startPosition);
         flip.setToY(endPosition);
         return flip;
@@ -96,7 +88,7 @@ public final class Animations {
      * Makes the object wiggle back and forth.
      */
     private static Animation createWiggleAnimation(final Label letterBox) {
-        TranslateTransition wiggle = new TranslateTransition(Duration.millis(WIGGLE_ANIMATION_DURATION_IN_MS), letterBox);
+        TranslateTransition wiggle = new TranslateTransition(Duration.millis(WIGGLE_DURATION_IN_MS), letterBox);
         wiggle.setToX(10);
         wiggle.setAutoReverse(true);
         wiggle.setCycleCount(4);

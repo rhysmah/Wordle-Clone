@@ -104,12 +104,13 @@ public class WordleController {
      */
     public void enterKeyPushed() {
 
+        PlayerWord playerWordObject = (PlayerWord) playerWord;
+        GameWord gameWordObject     = (GameWord) gameWord;
+
         if (currentLetterIndex == LETTERS_PER_ROW && currentRowIndex < ROWS_PER_GAMEBOARD) {
 
-            PlayerWord playerWordObject = (PlayerWord) playerWord;
-            GameWord gameWordObject     = (GameWord) gameWord;
-            String[] playerLetters      = playerWordObject.getPlayerWordLetters();
-            String[] gameLetters        = gameWordObject.getGameWordLetters();
+            String[] playerLetters = playerWordObject.getPlayerWordLetters();
+            String[] gameLetters   = gameWordObject.getGameWordLetters();
 
             for (int index = 0; index <LETTERS_PER_ROW; index++) {
                 checkAndAnimateLetters(gameWordObject, playerLetters, gameLetters, index);
@@ -118,8 +119,10 @@ public class WordleController {
             currentLetterIndex = 0;
 
             if (winCondition.satisfied()) {
-                PopUpWindow.display("Congratulations! You win!", gameWordObject.getGameWord());
+                PopUpWindow.display("Congratulations! You win!", "The word was indeed " + gameWordObject.getGameWord());
             }
+        } else {
+            PopUpWindow.display("You lost!", "The word was " + gameWordObject.getGameWord());
         }
     }
 
