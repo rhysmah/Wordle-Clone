@@ -33,8 +33,10 @@ public class PlayerWord implements Updatable {
         return playerWordLetters;
     }
 
-    /*
+    /**
      * Checks if the player word is valid.
+     *
+     * @return true if the player word is a five-letter word in the list of words, else false.
      */
     public boolean validWord() {
         String word = String.join("", playerWordLetters);
