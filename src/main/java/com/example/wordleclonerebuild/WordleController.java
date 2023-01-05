@@ -107,33 +107,32 @@ public class WordleController {
         if (currentLetterIndex == LETTERS_PER_ROW && currentRowIndex < ROWS_PER_GAMEBOARD) {
 
             PlayerWord playerWordObject = (PlayerWord) playerWord;
-            GameWord gameWordObject = (GameWord) gameWord;
+            GameWord gameWordObject     = (GameWord) gameWord;
+            String[] playerLetters      = playerWordObject.getPlayerWordLetters();
+            String[] gameLetters        = gameWordObject.getGameWordLetters();
 
-            String[] playerLetters = playerWordObject.getPlayerWordLetters();
-            String[] gameLetters = gameWordObject.getGameWordLetters();
-
-            for (int i = 0; i <LETTERS_PER_ROW; i++) {
-
-                if (winCondition.lettersAreEqual(playerLetters[i], gameLetters[i])) {
-                    Animations.playFlipAnimation(gameBoard[currentRowIndex][i], Animations.Colors.GREEN);
-                    winCondition.updateSolution(i, true);
-
-                } else if (winCondition.letterIsInWord(playerLetters[i], gameLetters)) {
-                    Animations.playFlipAnimation(gameBoard[currentRowIndex][i], Animations.Colors.YELLOW);
-
-                } else {
-                    Animations.playFlipAnimation(gameBoard[currentRowIndex][i], Animations.Colors.GREY);
-                }
+            for (int index = 0; index <LETTERS_PER_ROW; index++) {
+                checkAndAnimateLetters(gameWordObject, playerLetters, gameLetters, index);
             }
             currentRowIndex++;
             currentLetterIndex = 0;
 
-            if (winCondition.ifMet()) {
-                PopUpWindow.display("Congratulations! You win!", ((GameWord) gameWord).getGameWord());
+            if (winCondition.satisfied()) {
+                PopUpWindow.display("Congratulations! You win!", gameWordObject.getGameWord());
             }
+        }
+    }
+
+    private void checkAndAnimateLetters(GameWord gameWordObject, String[] playerLetters, String[] gameLetters, int i) {
+        if (winCondition.lettersAreEqual(playerLetters[i], gameLetters[i])) {
+            Animations.playFlipAnimation(gameBoard[currentRowIndex][i], Animations.Colors.GREEN);
+            winCondition.updateSolution(i, true);
+
+        } else if (winCondition.letterIsInWord(playerLetters[i], gameWordObject.getGameWord())) {
+            Animations.playFlipAnimation(gameBoard[currentRowIndex][i], Animations.Colors.YELLOW);
 
         } else {
-            PopUpWindow.display("Oh no! You lose.", ((GameWord) gameWord).getGameWord());
+            Animations.playFlipAnimation(gameBoard[currentRowIndex][i], Animations.Colors.GREY);
         }
     }
 

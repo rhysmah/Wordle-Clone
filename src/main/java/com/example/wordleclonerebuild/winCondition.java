@@ -17,7 +17,7 @@ public class winCondition implements Comparable {
      * @param lettersPerWord the length of the array to be created.
      */
     public winCondition(final int lettersPerWord) {
-        this.solution = new Boolean[lettersPerWord];
+        this.solution = new Boolean[] {false, false, false, false, false};
     }
 
     /**
@@ -50,19 +50,15 @@ public class winCondition implements Comparable {
      * @return true if the letter is in the word, else false.
      */
     @Override
-    public boolean letterIsInWord(final String letter, final String[] word) {
+    public boolean letterIsInWord(final String letter, final String word) {
         /*
          * The compiler doesn't know if an object of type Updatable contains Strings. So here,
          * we're looping through each of the objects in "word", whatever they may be, converting
          * each of those objects to a String, then comparing that String to "letter", itself a
          * String, to see if they match. We're explicitly asking to look for a String comparison.
          */
-        for (String letterInWord : word) {
-            if (letterInWord.equals(letter)) {
-                return true;
-            }
-        }
-        return false;
+        String[] lettersInWord = word.split("");
+        return Arrays.asList(lettersInWord).contains(letter);
     }
 
     /**
@@ -70,7 +66,7 @@ public class winCondition implements Comparable {
      *
      * @return true if the array contains all "true" values, else false.
      */
-    public Boolean ifMet() {
-        return Arrays.stream(solution).anyMatch(booleanValue -> !booleanValue);
+    public Boolean satisfied() {
+        return Arrays.stream(solution).allMatch(booleanValue -> booleanValue);
     }
 }
