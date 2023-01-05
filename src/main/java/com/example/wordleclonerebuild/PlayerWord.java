@@ -7,7 +7,7 @@ public class PlayerWord implements Updatable {
     private static final int LETTERS_PER_WORD    = 5;
     private static final String VALID_CHARACTERS = "^[a-zA-Z]*$";
 
-    private String[] playerWordLetters;
+    private final String[] playerWordLetters;
 
     public PlayerWord() {
         this.playerWordLetters = new String[LETTERS_PER_WORD];
@@ -31,13 +31,6 @@ public class PlayerWord implements Updatable {
      */
     public String[] getPlayerWordLetters() {
         return playerWordLetters;
-    }
-
-    /*
-     * Breaks validated player guess into an array of letters.
-     */
-    private void separateIntoArrayOfLetters(final String word) {
-        playerWordLetters = word.toUpperCase().split("");
     }
 
     /*
