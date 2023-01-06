@@ -111,7 +111,13 @@ public class WordleController {
     }
 
     /**
-     * Javadoc needed
+     * Checks if the player entered a valid word; if not, the player must enter a new word.
+     * <p>
+     * If the player word is valid, it's compared against the game word. After each turn,
+     * the game checks if the player (1) guessed the correct word or (2) ran out of turns.
+     * <p>
+     * If either end-game condition is met, the game ends, and a window pops up telling
+     * the player if they won or lost.
      */
     protected void enterKeyPushed() {
 
@@ -134,6 +140,9 @@ public class WordleController {
         checkEndGameConditions();
     }
 
+    /*
+     * Checks if the player guessed the correct word or ran out of turns.
+     */
     private void checkEndGameConditions() {
 
         GameWord gameWordObject     = (GameWord) gameWord;
@@ -146,6 +155,29 @@ public class WordleController {
         }
     }
 
+    /*
+     * Checks the following:
+     * (1) If the player's guess had letters in the exact same position as the game word, the letterbox turns green.
+     * (2) If the player's guess contains letters that are NOT in the game word, the letterbox stays grey.
+     */
+    private void checkForAndAnimateGreenAndGreyLetters(PlayerWord playerWordObject, GameWord gameWordObject, String[] remainingLettersInWord) {
+        for (int index = 0; index < NUM_LETTERS_PER_ROW; index++) {
+
+            if (WinCondition.lettersAreEqual(playerWordObject.getLetters()[index], gameWordObject.getLetters()[index])) {
+                remainingLettersInWord[index] = "";
+                Animations.playFlipAnimation(gameBoard[currentRowIndex][index], Animations.Colors.GREEN);
+                WinCondition.updateWinCondition(index, true);
+
+            } else {
+                Animations.playFlipAnimation(gameBoard[currentRowIndex][index], Animations.Colors.GREY);
+            }
+        }
+    }
+
+    /*
+     * Checks if the player's guess had letters in the game word, but in the wrong position. If so, those
+     * letterboxes turn yellow.
+     */
     private void checkForAndAnimateYellowLetters(PlayerWord playerWordObject, GameWord gameWordObject, String[] remainingLettersInWord) {
         for (int index = 0; index < NUM_LETTERS_PER_ROW; index++) {
 
@@ -155,20 +187,6 @@ public class WordleController {
                 int letterToRemove = Arrays.asList(remainingLettersInWord).indexOf(playerWordObject.getLetters()[index]);
                 remainingLettersInWord[letterToRemove] = "";
                 Animations.playFlipAnimation(gameBoard[currentRowIndex][index], Animations.Colors.YELLOW);
-            }
-        }
-    }
-
-    private void checkForAndAnimateGreenAndGreyLetters(PlayerWord playerWordObject, GameWord gameWordObject, String[] remainingLettersInWord) {
-        for (int index = 0; index < NUM_LETTERS_PER_ROW; index++) {
-            
-            if (WinCondition.lettersAreEqual(playerWordObject.getLetters()[index], gameWordObject.getLetters()[index])) {
-                remainingLettersInWord[index] = "";
-                Animations.playFlipAnimation(gameBoard[currentRowIndex][index], Animations.Colors.GREEN);
-                WinCondition.updateWinCondition(index, true);
-                
-            } else {
-                Animations.playFlipAnimation(gameBoard[currentRowIndex][index], Animations.Colors.GREY);
             }
         }
     }
