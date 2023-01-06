@@ -7,7 +7,7 @@ import java.io.IOException;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-public class Wordle extends Application {
+public class WordleDriver extends Application {
 
     private static final int ANIMATION_DELAY_TIME_IN_MS = 500;
 
@@ -25,7 +25,7 @@ public class Wordle extends Application {
     @Override
     public void start(final Stage stage) throws IOException {
 
-        FXMLLoader fxmlLoader = new FXMLLoader(Wordle.class.getResource("gameboard.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(WordleDriver.class.getResource("gameboard.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), WINDOW_WIDTH_IN_PIXELS, WINDOW_HEIGHT_IN_PIXELS);
 
         WordleController wordleController = fxmlLoader.getController();

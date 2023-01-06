@@ -74,9 +74,9 @@ public class WordleController {
     public WordleController() {
         this.currentLetterIndex = 0;
         this.currentRowIndex    = 0;
-        this.gameWord           = new GameWord();
+        this.WinCondition       = new WinCondition();
         this.playerWord         = new PlayerWord();
-        this.WinCondition = new WinCondition();
+        this.gameWord           = new GameWord();
     }
 
     /**
@@ -88,7 +88,6 @@ public class WordleController {
 
         GameWord gameWordObject = (GameWord) gameWord;
         gameWordObject.setGameWord();
-        System.out.println(gameWordObject.getGameWord());
     }
 
     /**
@@ -99,7 +98,6 @@ public class WordleController {
 
         GameWord gameWordObject = (GameWord) gameWord;
         gameWordObject.setGameWord();
-        System.out.println(gameWordObject.getGameWord());
 
         currentLetterIndex = 0;
         currentRowIndex = 0;
@@ -120,22 +118,26 @@ public class WordleController {
         PlayerWord playerWordObject = (PlayerWord) playerWord;
         GameWord gameWordObject     = (GameWord) gameWord;
 
-        // If player enters invalid word, row wiggles; player must enter a new word.
         if (playerWordObject.notValidWord()) {
             for (Label letterBox : gameBoard[currentRowIndex]) {
                 Animations.playWiggleAnimation(letterBox);
             }
-
-        // If player enters valid word, it's compared to game word and color-coded, as per Wordle rules.
         } else {
             String[] remainingLettersInWord = gameWordObject.getLetters();
 
-            checkAndAnimateGreenAndGreyLetters(playerWordObject, gameWordObject, remainingLettersInWord);
-            checkAndAnimateYellowLetters(playerWordObject, gameWordObject, remainingLettersInWord);
+            checkForAndAnimateGreenAndGreyLetters(playerWordObject, gameWordObject, remainingLettersInWord);
+            checkForAndAnimateYellowLetters(playerWordObject, gameWordObject, remainingLettersInWord);
 
             currentRowIndex++;
             currentLetterIndex = 0;
         }
+        checkEndGameConditions();
+    }
+
+    private void checkEndGameConditions() {
+
+        GameWord gameWordObject     = (GameWord) gameWord;
+
         if (noRowsRemaining()) {
             PopUpWindow.display("You lose!", "The word was " + gameWordObject.getGameWord());
         }
@@ -144,7 +146,7 @@ public class WordleController {
         }
     }
 
-    private void checkAndAnimateYellowLetters(PlayerWord playerWordObject, GameWord gameWordObject, String[] remainingLettersInWord) {
+    private void checkForAndAnimateYellowLetters(PlayerWord playerWordObject, GameWord gameWordObject, String[] remainingLettersInWord) {
         for (int index = 0; index < NUM_LETTERS_PER_ROW; index++) {
 
             if (Arrays.asList(remainingLettersInWord).contains(playerWordObject.getLetters()[index])
@@ -157,7 +159,7 @@ public class WordleController {
         }
     }
 
-    private void checkAndAnimateGreenAndGreyLetters(PlayerWord playerWordObject, GameWord gameWordObject, String[] remainingLettersInWord) {
+    private void checkForAndAnimateGreenAndGreyLetters(PlayerWord playerWordObject, GameWord gameWordObject, String[] remainingLettersInWord) {
         for (int index = 0; index < NUM_LETTERS_PER_ROW; index++) {
             
             if (WinCondition.lettersAreEqual(playerWordObject.getLetters()[index], gameWordObject.getLetters()[index])) {
