@@ -123,7 +123,7 @@ public class WordleController {
 
         PlayerWord playerWordObject     = (PlayerWord) playerWord;
         GameWord gameWordObject         = (GameWord) gameWord;
-        String[] remainingLettersInWord = gameWordObject.getLetters();
+        String[] remainingLettersInWord = Arrays.copyOf(gameWordObject.getLetters(), gameWordObject.getLetters().length);
 
         if (playerWordObject.notValidWord()) {
             for (Label letterBox : gameBoard[currentRowIndex]) {
@@ -138,8 +138,6 @@ public class WordleController {
         }
         checkEndGameConditions();
     }
-
-    // ToDo -- Bug: have to create an array copy that doesn't affect original for player word-game word comparison.
 
     /*
      * Checks if the player guessed the correct word or ran out of turns.
