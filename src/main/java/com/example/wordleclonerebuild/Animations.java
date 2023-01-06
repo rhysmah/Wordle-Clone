@@ -55,13 +55,13 @@ public final class Animations {
      *
      * @param letterBox the object to be animated.
      */
-    public static void playFlipAnimation(final Label letterBox, final Colors color) {
+    public static void playFlipAnimation(final Label letterBox, final Colors letterBoxColor) {
         Animation animationOne = createFlipAnimation(letterBox, 1, 0);
         Animation animationTwo = createFlipAnimation(letterBox, 0, 1);
 
         animationOne.play();
         animationOne.setOnFinished(actionEvent -> {
-            updateContainerColor(letterBox, color);
+            updateContainerColor(letterBox, letterBoxColor);
             animationTwo.play();
         });
     }

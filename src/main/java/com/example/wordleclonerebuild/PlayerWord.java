@@ -29,7 +29,7 @@ public class PlayerWord implements Updatable {
      *
      * @return the player words as an array (String[]).
      */
-    public String[] getPlayerWordLetters() {
+    public String[] getLetters() {
         return playerWordLetters;
     }
 

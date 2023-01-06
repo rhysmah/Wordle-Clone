@@ -18,7 +18,7 @@ public class WordleController {
 
     private final Updatable gameWord;
     private final Updatable playerWord;
-    private final GameWinCondition GameWinCondition;
+    private final WinCondition WinCondition;
 
     @FXML private Label letter1_1;
     @FXML private Label letter1_2;
@@ -72,7 +72,7 @@ public class WordleController {
         this.currentRowIndex    = 0;
         this.gameWord           = new GameWord();
         this.playerWord         = new PlayerWord();
-        this.GameWinCondition = new GameWinCondition();
+        this.WinCondition = new WinCondition();
     }
 
     /**
@@ -122,11 +122,11 @@ public class WordleController {
             }
 
         } else if (playerWordObject.validWord()) {
-            String[] playerLetters = playerWordObject.getPlayerWordLetters();
-            String[] gameLetters   = gameWordObject.getGameWordLetters();
+            String[] playerLetters = playerWordObject.getLetters();
+            String[] gameLetters   = gameWordObject.getLetters();
 
             for (int index = 0; index <LETTERS_PER_ROW; index++) {
-                checkAndAnimateLetters(gameWordObject, playerLetters, gameLetters, index);
+                checkAndAnimateLetters(gameWordObject, playerLetters, index);
             }
             currentRowIndex++;
             currentLetterIndex = 0;
@@ -134,7 +134,7 @@ public class WordleController {
         if (noRowsRemaining()) {
             PopUpWindow.display("You lose!", "The word was " + gameWordObject.getGameWord());
         }
-        if (GameWinCondition.satisfied()) {
+        if (WinCondition.satisfied()) {
             PopUpWindow.display("You win!", "The word was indeed " + gameWordObject.getGameWord());
         }
     }
@@ -162,18 +162,28 @@ public class WordleController {
     /*
      * Compares letters in player word to letters in game word and animates the letters appropriately.
      */
-    private void checkAndAnimateLetters(GameWord gameWordObject, String[] playerLetters, String[] gameLetters, int i) {
-        if (GameWinCondition.lettersAreEqual(playerLetters[i], gameLetters[i])) {
-            Animations.playFlipAnimation(gameBoard[currentRowIndex][i], Animations.Colors.GREEN);
-            GameWinCondition.updateWinCondition(i, true);
+    private void checkAndAnimateLetters(final GameWord gameWordObject, final String[] playerLetters, final int i) {
 
-        } else if (GameWinCondition.letterIsInWord(playerLetters[i], gameWordObject.getGameWord())) {
+        String[] remainingLettersInWord = gameWordObject.getLetters();
+
+        if (WinCondition.lettersAreEqual(playerLetters[i], gameWordObject.getLetters()[i])) {
+
+            remainingLettersInWord[i] = "";
+
+            Animations.playFlipAnimation(gameBoard[currentRowIndex][i], Animations.Colors.GREEN);
+            WinCondition.updateWinCondition(i, true);
+
+        } else if (WinCondition.letterIsInWord(playerLetters[i], gameWordObject.getGameWord())) {
             Animations.playFlipAnimation(gameBoard[currentRowIndex][i], Animations.Colors.YELLOW);
 
         } else {
             Animations.playFlipAnimation(gameBoard[currentRowIndex][i], Animations.Colors.GREY);
         }
     }
+
+//    public void checkAndAnimateYellowLetters(final GameWord gameWordObject, final String[] playerLetters, final int i) {
+//
+//    }
 
     /**
      * Deletes the last inputted letter.

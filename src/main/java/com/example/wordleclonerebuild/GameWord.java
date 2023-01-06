@@ -43,7 +43,7 @@ public class GameWord implements Updatable {
      *
      * @return the gameWordLetters (a String array).
      */
-    public String[] getGameWordLetters() {
+    public String[] getLetters() {
         return gameWordLetters;
     }
 
