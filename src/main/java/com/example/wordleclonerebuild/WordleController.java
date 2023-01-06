@@ -17,11 +17,11 @@ public class WordleController {
 
     private static final String DEFAULT_LETTERBOX_COLOR     = "-fx-background-color: #DCDCDC";
     private static final String DEFAULT_LETTERBOX_CHARACTER = "";
-    private static final int ROWS_PER_GAMEBOARD             = 6;
-    private static final int LETTERS_PER_ROW                = 5;
+    private static final int    NUM_ROWS_PER_GAMEBOARD      = 6;
+    private static final int    NUM_LETTERS_PER_ROW         = 5;
 
-    private final Updatable gameWord;
-    private final Updatable playerWord;
+    private final Updatable    gameWord;
+    private final Updatable    playerWord;
     private final WinCondition WinCondition;
 
     @FXML private Label letter1_1;
@@ -120,37 +120,18 @@ public class WordleController {
         PlayerWord playerWordObject = (PlayerWord) playerWord;
         GameWord gameWordObject     = (GameWord) gameWord;
 
-        if (!playerWordObject.validWord()) {
-            for (int index = 0; index <LETTERS_PER_ROW; index++) {
-                Animations.playWiggleAnimation(gameBoard[currentRowIndex][index]);
+        // If player enters invalid word, row wiggles; player must enter a new word.
+        if (playerWordObject.notValidWord()) {
+            for (Label letterBox : gameBoard[currentRowIndex]) {
+                Animations.playWiggleAnimation(letterBox);
             }
-        } else if (playerWordObject.validWord()) {
 
-        // START OF CHANGE //
+        // If player enters valid word, it's compared to game word and color-coded, as per Wordle rules.
+        } else {
             String[] remainingLettersInWord = gameWordObject.getLetters();
 
-            for (int index = 0; index <LETTERS_PER_ROW; index++) {
-                if (WinCondition.lettersAreEqual(playerWordObject.getLetters()[index], gameWordObject.getLetters()[index])) {
-
-                    remainingLettersInWord[index] = "";
-
-                    Animations.playFlipAnimation(gameBoard[currentRowIndex][index], Animations.Colors.GREEN);
-                    WinCondition.updateWinCondition(index, true);
-
-                } else {
-                    Animations.playFlipAnimation(gameBoard[currentRowIndex][index], Animations.Colors.GREY);
-                }
-            }
-
-            for (int index = 0; index <LETTERS_PER_ROW; index++) {
-                if (Arrays.asList(remainingLettersInWord).contains(playerWordObject.getLetters()[index])
-                        && !playerWordObject.getLetters()[index].equals(gameWordObject.getLetters()[index])) {
-                    int letterToRemove = Arrays.asList(remainingLettersInWord).indexOf(playerWordObject.getLetters()[index]);
-                    remainingLettersInWord[letterToRemove] = "";
-                    Animations.playFlipAnimation(gameBoard[currentRowIndex][index], Animations.Colors.YELLOW);
-                }
-            }
-            // END OF CHANGE //
+            checkAndAnimateGreenAndGreyLetters(playerWordObject, gameWordObject, remainingLettersInWord);
+            checkAndAnimateYellowLetters(playerWordObject, gameWordObject, remainingLettersInWord);
 
             currentRowIndex++;
             currentLetterIndex = 0;
@@ -163,13 +144,40 @@ public class WordleController {
         }
     }
 
+    private void checkAndAnimateYellowLetters(PlayerWord playerWordObject, GameWord gameWordObject, String[] remainingLettersInWord) {
+        for (int index = 0; index < NUM_LETTERS_PER_ROW; index++) {
+
+            if (Arrays.asList(remainingLettersInWord).contains(playerWordObject.getLetters()[index])
+                    && !playerWordObject.getLetters()[index].equals(gameWordObject.getLetters()[index])) {
+
+                int letterToRemove = Arrays.asList(remainingLettersInWord).indexOf(playerWordObject.getLetters()[index]);
+                remainingLettersInWord[letterToRemove] = "";
+                Animations.playFlipAnimation(gameBoard[currentRowIndex][index], Animations.Colors.YELLOW);
+            }
+        }
+    }
+
+    private void checkAndAnimateGreenAndGreyLetters(PlayerWord playerWordObject, GameWord gameWordObject, String[] remainingLettersInWord) {
+        for (int index = 0; index < NUM_LETTERS_PER_ROW; index++) {
+            
+            if (WinCondition.lettersAreEqual(playerWordObject.getLetters()[index], gameWordObject.getLetters()[index])) {
+                remainingLettersInWord[index] = "";
+                Animations.playFlipAnimation(gameBoard[currentRowIndex][index], Animations.Colors.GREEN);
+                WinCondition.updateWinCondition(index, true);
+                
+            } else {
+                Animations.playFlipAnimation(gameBoard[currentRowIndex][index], Animations.Colors.GREY);
+            }
+        }
+    }
+
     /**
      * Adds a letter to the gameboard.
      *
      * @param letter the letter to be added to the gameboard.
      */
     protected void letterKeyPushed(final String letter) {
-        if (currentLetterIndex < LETTERS_PER_ROW) {
+        if (currentLetterIndex < NUM_LETTERS_PER_ROW) {
             gameBoard[currentRowIndex][currentLetterIndex].setText(letter);
             playerWord.updateLetterAtIndexPosition(letter, currentLetterIndex);
             currentLetterIndex++;
@@ -180,7 +188,7 @@ public class WordleController {
      * Checks if there are still player turns remaining -- i.e., there are rows left.
      */
     private boolean noRowsRemaining() {
-        return currentRowIndex == ROWS_PER_GAMEBOARD;
+        return currentRowIndex == NUM_ROWS_PER_GAMEBOARD;
     }
 
     /**

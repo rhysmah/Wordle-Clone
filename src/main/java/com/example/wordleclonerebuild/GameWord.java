@@ -8,7 +8,7 @@ import java.util.Random;
  * @author Mahannah
  * @version 5 January 2023
  */
-public class GameWord implements Updatable {
+public class GameWord extends Word implements Updatable {
 
     private static final Random RANDOM = new Random();
     private String gameWord;
@@ -18,6 +18,7 @@ public class GameWord implements Updatable {
      * Creates an object of type GameWord.
      */
     public GameWord() {
+        super();
         gameWord = "";
     }
 

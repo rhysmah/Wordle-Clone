@@ -2,14 +2,15 @@ package com.example.wordleclonerebuild;
 
 import java.util.Arrays;
 
-public class PlayerWord implements Updatable {
+public class PlayerWord extends Word implements Updatable {
 
-    private static final int LETTERS_PER_WORD    = 5;
     private static final String VALID_CHARACTERS = "^[a-zA-Z]*$";
+    private static final int    LETTERS_PER_WORD = 5;
 
     private final String[] playerWordLetters;
 
     public PlayerWord() {
+        super();
         this.playerWordLetters = new String[LETTERS_PER_WORD];
     }
 
@@ -38,9 +39,9 @@ public class PlayerWord implements Updatable {
      *
      * @return true if the player word is a five-letter word in the list of words, else false.
      */
-    public boolean validWord() {
+    public boolean notValidWord() {
         String word = String.join("", playerWordLetters);
-        return containsValidCharacters(word) && isValidLength(word) && isInWordList(word);
+        return !containsValidCharacters(word) || !isValidLength(word) || !isInWordList(word);
     }
 
     /*
