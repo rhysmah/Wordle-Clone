@@ -5,7 +5,7 @@ import java.util.Arrays;
 /**
  * Represents the win condition array for a Wordle game.
  * @author Mahannah
- * @version 4 January 2023
+ * @version 6 January 2023
  */
 public class WinCondition implements Comparable {
 

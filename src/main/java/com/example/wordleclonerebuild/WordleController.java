@@ -11,7 +11,7 @@ import java.util.Arrays;
  * Controls the main game screen.
  *
  * @author Mahannah
- * @version 5 January 2023
+ * @version 6 January 2023
  */
 public class WordleController {
 

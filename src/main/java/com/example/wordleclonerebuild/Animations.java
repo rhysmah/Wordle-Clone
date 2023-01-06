@@ -10,7 +10,7 @@ import javafx.util.Duration;
  * A class of static methods for animating the Wordle board.
  *
  * @author Mahannah
- * @version 5 January 2023
+ * @version 6 January 2023
  */
 public final class Animations {
 
