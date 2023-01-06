@@ -121,16 +121,15 @@ public class WordleController {
      */
     protected void enterKeyPushed() {
 
-        PlayerWord playerWordObject = (PlayerWord) playerWord;
-        GameWord gameWordObject     = (GameWord) gameWord;
+        PlayerWord playerWordObject     = (PlayerWord) playerWord;
+        GameWord gameWordObject         = (GameWord) gameWord;
+        String[] remainingLettersInWord = gameWordObject.getLetters();
 
         if (playerWordObject.notValidWord()) {
             for (Label letterBox : gameBoard[currentRowIndex]) {
                 Animations.playWiggleAnimation(letterBox);
             }
         } else {
-            String[] remainingLettersInWord = gameWordObject.getLetters();
-
             checkForAndAnimateGreenAndGreyLetters(playerWordObject, gameWordObject, remainingLettersInWord);
             checkForAndAnimateYellowLetters(playerWordObject, gameWordObject, remainingLettersInWord);
 
@@ -139,6 +138,8 @@ public class WordleController {
         }
         checkEndGameConditions();
     }
+
+    // ToDo -- Bug: have to create an array copy that doesn't affect original for player word-game word comparison.
 
     /*
      * Checks if the player guessed the correct word or ran out of turns.
