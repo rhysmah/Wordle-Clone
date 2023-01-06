@@ -5,6 +5,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.fxml.FXML;
 
+import java.util.Arrays;
+
 /**
  * Controls the main game screen.
  *
@@ -13,8 +15,10 @@ import javafx.fxml.FXML;
  */
 public class WordleController {
 
-    private static final int LETTERS_PER_ROW    = 5;
-    private static final int ROWS_PER_GAMEBOARD = 6;
+    private static final String DEFAULT_LETTERBOX_COLOR     = "-fx-background-color: #DCDCDC";
+    private static final String DEFAULT_LETTERBOX_CHARACTER = "";
+    private static final int ROWS_PER_GAMEBOARD             = 6;
+    private static final int LETTERS_PER_ROW                = 5;
 
     private final Updatable gameWord;
     private final Updatable playerWord;
@@ -122,9 +126,32 @@ public class WordleController {
             }
         } else if (playerWordObject.validWord()) {
 
+        // START OF CHANGE //
+            String[] remainingLettersInWord = gameWordObject.getLetters();
+
             for (int index = 0; index <LETTERS_PER_ROW; index++) {
-                checkAndAnimateLetters(gameWordObject, playerWordObject, index);
+                if (WinCondition.lettersAreEqual(playerWordObject.getLetters()[index], gameWordObject.getLetters()[index])) {
+
+                    remainingLettersInWord[index] = "";
+
+                    Animations.playFlipAnimation(gameBoard[currentRowIndex][index], Animations.Colors.GREEN);
+                    WinCondition.updateWinCondition(index, true);
+
+                } else {
+                    Animations.playFlipAnimation(gameBoard[currentRowIndex][index], Animations.Colors.GREY);
+                }
             }
+
+            for (int index = 0; index <LETTERS_PER_ROW; index++) {
+                if (Arrays.asList(remainingLettersInWord).contains(playerWordObject.getLetters()[index])
+                        && !playerWordObject.getLetters()[index].equals(gameWordObject.getLetters()[index])) {
+                    int letterToRemove = Arrays.asList(remainingLettersInWord).indexOf(playerWordObject.getLetters()[index]);
+                    remainingLettersInWord[letterToRemove] = "";
+                    Animations.playFlipAnimation(gameBoard[currentRowIndex][index], Animations.Colors.YELLOW);
+                }
+            }
+            // END OF CHANGE //
+
             currentRowIndex++;
             currentLetterIndex = 0;
         }
@@ -156,51 +183,21 @@ public class WordleController {
         return currentRowIndex == ROWS_PER_GAMEBOARD;
     }
 
-    /*
-     * Compares letters in player word to letters in game word and animates the letters appropriately.
-     */
-    private void checkAndAnimateLetters(final Updatable gameWord, final Updatable playerWord, final int i) {
-
-        GameWord gameWordObject = (GameWord) gameWord;
-        PlayerWord playerWordObject = (PlayerWord) playerWord;
-
-        String[] remainingLettersInWord = gameWordObject.getLetters();
-
-        if (WinCondition.lettersAreEqual(playerWordObject.getLetters()[i], gameWordObject.getLetters()[i])) {
-
-            Animations.playFlipAnimation(gameBoard[currentRowIndex][i], Animations.Colors.GREEN);
-            WinCondition.updateWinCondition(i, true);
-
-        } else if (WinCondition.letterIsInWord(playerWordObject.getLetters()[i], gameWordObject.getGameWord())) {
-            Animations.playFlipAnimation(gameBoard[currentRowIndex][i], Animations.Colors.YELLOW);
-
-        } else {
-            Animations.playFlipAnimation(gameBoard[currentRowIndex][i], Animations.Colors.GREY);
-        }
-    }
-
-    /*
-     * TODO
-     * Check here: stackoverflow.com/questions/71324956/wordle-implementation-dealing-with-duplicate-letters-edge-case
-     * Have to create a copy of the game word, then check for green letters and grey letters, then check again
-     * for yellow letters, in a separate loop.
-     */
-
     /**
      * Deletes the last inputted letter.
      */
     protected void backspaceKeyPushed() {
         if (currentLetterIndex > 0) {
             currentLetterIndex--;
-            gameBoard[currentRowIndex][currentLetterIndex].setText("");
+            gameBoard[currentRowIndex][currentLetterIndex].setText(DEFAULT_LETTERBOX_CHARACTER);
         }
     }
 
     private void clearGameBoard() {
         for (Label[] row : gameBoard) {
             for (Label letter : row) {
-                letter.setText("");
-                letter.setStyle("-fx-background-color: #DCDCDC");
+                letter.setText(DEFAULT_LETTERBOX_CHARACTER);
+                letter.setStyle(DEFAULT_LETTERBOX_COLOR);
             }
         }
     }
