@@ -30,7 +30,6 @@ public class Wordle extends Application {
 
         WordleController wordleController = fxmlLoader.getController();
 
-        // Sets up key presses from the keyboard.
         scene.setOnKeyPressed(keyEvent -> {
             if (keyEvent.getCode().isLetterKey()) {
                 wordleController.letterKeyPushed(keyEvent.getText().toUpperCase());
