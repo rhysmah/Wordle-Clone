@@ -120,13 +120,10 @@ public class WordleController {
             for (int index = 0; index <LETTERS_PER_ROW; index++) {
                 Animations.playWiggleAnimation(gameBoard[currentRowIndex][index]);
             }
-
         } else if (playerWordObject.validWord()) {
-            String[] playerLetters = playerWordObject.getLetters();
-            String[] gameLetters   = gameWordObject.getLetters();
 
             for (int index = 0; index <LETTERS_PER_ROW; index++) {
-                checkAndAnimateLetters(gameWordObject, playerLetters, index);
+                checkAndAnimateLetters(gameWordObject, playerWordObject, index);
             }
             currentRowIndex++;
             currentLetterIndex = 0;
@@ -162,18 +159,21 @@ public class WordleController {
     /*
      * Compares letters in player word to letters in game word and animates the letters appropriately.
      */
-    private void checkAndAnimateLetters(final GameWord gameWordObject, final String[] playerLetters, final int i) {
+    private void checkAndAnimateLetters(final Updatable gameWord, final Updatable playerWord, final int i) {
+
+        GameWord gameWordObject = (GameWord) gameWord;
+        PlayerWord playerWordObject = (PlayerWord) playerWord;
 
         String[] remainingLettersInWord = gameWordObject.getLetters();
 
-        if (WinCondition.lettersAreEqual(playerLetters[i], gameWordObject.getLetters()[i])) {
+        if (WinCondition.lettersAreEqual(playerWordObject.getLetters()[i], gameWordObject.getLetters()[i])) {
 
             remainingLettersInWord[i] = "";
 
             Animations.playFlipAnimation(gameBoard[currentRowIndex][i], Animations.Colors.GREEN);
             WinCondition.updateWinCondition(i, true);
 
-        } else if (WinCondition.letterIsInWord(playerLetters[i], gameWordObject.getGameWord())) {
+        } else if (WinCondition.letterIsInWord(playerWordObject.getLetters()[i], gameWordObject.getGameWord())) {
             Animations.playFlipAnimation(gameBoard[currentRowIndex][i], Animations.Colors.YELLOW);
 
         } else {
