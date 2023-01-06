@@ -168,8 +168,6 @@ public class WordleController {
 
         if (WinCondition.lettersAreEqual(playerWordObject.getLetters()[i], gameWordObject.getLetters()[i])) {
 
-            remainingLettersInWord[i] = "";
-
             Animations.playFlipAnimation(gameBoard[currentRowIndex][i], Animations.Colors.GREEN);
             WinCondition.updateWinCondition(i, true);
 
@@ -181,9 +179,12 @@ public class WordleController {
         }
     }
 
-//    public void checkAndAnimateYellowLetters(final GameWord gameWordObject, final String[] playerLetters, final int i) {
-//
-//    }
+    /*
+     * TODO
+     * Check here: stackoverflow.com/questions/71324956/wordle-implementation-dealing-with-duplicate-letters-edge-case
+     * Have to create a copy of the game word, then check for green letters and grey letters, then check again
+     * for yellow letters, in a separate loop.
+     */
 
     /**
      * Deletes the last inputted letter.
