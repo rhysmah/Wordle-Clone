@@ -7,14 +7,14 @@ import java.util.Arrays;
  * @author Mahannah
  * @version 4 January 2023
  */
-public class winCondition implements Comparable {
+public class GameWinCondition implements Comparable {
 
     private final Boolean[] solution;
 
     /**
      * Creates an object of type winCondition.
      */
-    public winCondition() {
+    public GameWinCondition() {
         this.solution = new Boolean[] {false, false, false, false, false};
     }
 

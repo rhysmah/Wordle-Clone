@@ -18,7 +18,7 @@ public class WordleController {
 
     private final Updatable gameWord;
     private final Updatable playerWord;
-    private final winCondition winCondition;
+    private final GameWinCondition GameWinCondition;
 
     @FXML private Label letter1_1;
     @FXML private Label letter1_2;
@@ -72,7 +72,7 @@ public class WordleController {
         this.currentRowIndex    = 0;
         this.gameWord           = new GameWord();
         this.playerWord         = new PlayerWord();
-        this.winCondition       = new winCondition();
+        this.GameWinCondition = new GameWinCondition();
     }
 
     /**
@@ -109,7 +109,7 @@ public class WordleController {
     }
 
     /**
-     *
+     * Javadoc needed
      */
     protected void enterKeyPushed() {
 
@@ -131,34 +131,11 @@ public class WordleController {
             currentRowIndex++;
             currentLetterIndex = 0;
         }
-        if (!rowsRemaining()) {
+        if (noRowsRemaining()) {
             PopUpWindow.display("You lose!", "The word was " + gameWordObject.getGameWord());
         }
-        if (winCondition.satisfied()) {
+        if (GameWinCondition.satisfied()) {
             PopUpWindow.display("You win!", "The word was indeed " + gameWordObject.getGameWord());
-        }
-    }
-
-    /*
-     * Checks if there are still player turns remaining -- i.e., there are rows left.
-     */
-    private boolean rowsRemaining() {
-        return currentRowIndex < ROWS_PER_GAMEBOARD;
-    }
-
-    /*
-     * Compares letters in player word to letters in game word and animates the letters appropriately.
-     */
-    private void checkAndAnimateLetters(GameWord gameWordObject, String[] playerLetters, String[] gameLetters, int i) {
-        if (winCondition.lettersAreEqual(playerLetters[i], gameLetters[i])) {
-            Animations.playFlipAnimation(gameBoard[currentRowIndex][i], Animations.Colors.GREEN);
-            winCondition.updateWinCondition(i, true);
-
-        } else if (winCondition.letterIsInWord(playerLetters[i], gameWordObject.getGameWord())) {
-            Animations.playFlipAnimation(gameBoard[currentRowIndex][i], Animations.Colors.YELLOW);
-
-        } else {
-            Animations.playFlipAnimation(gameBoard[currentRowIndex][i], Animations.Colors.GREY);
         }
     }
 
@@ -175,6 +152,29 @@ public class WordleController {
         }
     }
 
+    /*
+     * Checks if there are still player turns remaining -- i.e., there are rows left.
+     */
+    private boolean noRowsRemaining() {
+        return currentRowIndex == ROWS_PER_GAMEBOARD;
+    }
+
+    /*
+     * Compares letters in player word to letters in game word and animates the letters appropriately.
+     */
+    private void checkAndAnimateLetters(GameWord gameWordObject, String[] playerLetters, String[] gameLetters, int i) {
+        if (GameWinCondition.lettersAreEqual(playerLetters[i], gameLetters[i])) {
+            Animations.playFlipAnimation(gameBoard[currentRowIndex][i], Animations.Colors.GREEN);
+            GameWinCondition.updateWinCondition(i, true);
+
+        } else if (GameWinCondition.letterIsInWord(playerLetters[i], gameWordObject.getGameWord())) {
+            Animations.playFlipAnimation(gameBoard[currentRowIndex][i], Animations.Colors.YELLOW);
+
+        } else {
+            Animations.playFlipAnimation(gameBoard[currentRowIndex][i], Animations.Colors.GREY);
+        }
+    }
+
     /**
      * Deletes the last inputted letter.
      */
@@ -185,9 +185,6 @@ public class WordleController {
         }
     }
 
-    /*
-     * Erases all current letters on the gameboard.
-     */
     private void clearGameBoard() {
         for (Label[] row : gameBoard) {
             for (Label letter : row) {
@@ -197,10 +194,6 @@ public class WordleController {
         }
     }
 
-    /*
-     * Initializes all the Labels on the gameboard. Labels contain the player's letter
-     * inputs. There are six rows; each hold five letters, as per the rules of Wordle.
-     */
     private void initializeGameBoard() {
         gameBoard = new Label[][] {
                 {letter1_1, letter1_2, letter1_3, letter1_4, letter1_5},
